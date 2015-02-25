@@ -100,9 +100,9 @@ The ```all``` target creates executables for all files listed under ```all:``` i
 	g++ -ansi -pedantic -Wall - Werror src/ls.cpp -o bin/ls
 ```
 
-By running ```make``` you utilize the ```all``` flag and have now created an executable ```shell``` and ```ls``` in the ```bin``` directory. In larger projects you may only want to create one specific executable. This is that the second and third targets ```shell``` and ```ls``` are for.
+By running ```make``` you utilize the ```all``` flag and have now created an executable ```shell``` and ```ls``` in the ```bin``` directory. In larger projects you may only want to create one specific executable. This what the targets ```shell``` and ```ls``` are for.  
 
-Let's run run only our ls program:
+Let's run only our ls program:
 
 ```
 	$ make ls
