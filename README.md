@@ -6,7 +6,7 @@ Why are ```Makefile```s so important? Instead of entering a command such as ```g
 In projects, ```Makefile```s should be placed in the root directory, the files you wish to execute for the ```Makefile``` should be placed in a directory called ```src```. To create a ```Makefile``` enter the following command:
 ```	$: touch Makefile```
 To edit the ```Makefile``` enter:
-``` $: vim Makefile```
+``` $: [text editor] Makefile```
 
 Let's say we have a program ```shell.cpp``` in our ```src``` directory, this program will take in user commands until ```exit``` is entered by the user. Let's try running our program using a ```Makefile``` instead of the *old* way. Here is the ```Makefile``` in its entirety:
 
@@ -37,7 +37,7 @@ all:
 The first line of the ```all``` target is a simple if-else statement. If there is not a directory called ```bin``` then make a directory called ```bin```. 
 The second line is compiling our program with ```g++``` using the flags we specified in line 1. It specifies the target is in the ```src``` directory and the file is ```shell.cpp```. ```-o bin/shell``` creates an executable ```shell``` in the ```bin``` directory. 
 
-Note the spaces in ```[ ! -d bin ]``` ```bash``` syntax requires there to be spaces for ```[]``` brackets in order to correctly identify variables. If the Makefile instead contained ```if [! -d bin ]; then mkdir bin; fi``` you would see something similar to this:
+Note the spaces in ```[ ! -d bin ]``` ```bash``` syntax requires there to be spaces for ```[]``` brackets in order to correctly identify variables. If the Makefile instead contained ```if [! -d bin ]; then mkdir bin; fi``` you would see this:
 
 ```
 	$: make
@@ -47,7 +47,9 @@ Note the spaces in ```[ ! -d bin ]``` ```bash``` syntax requires there to be spa
 
 Now we have our ```Makefile``` lets run our shell program! From the root directory enter the ```make``` command.
 
-```	$ make```
+```	
+	$ make
+```
 
 At this point you should see the following:
 
@@ -56,13 +58,14 @@ At this point you should see the following:
 	g++ -ansi -pedantic -Wall - Werror src/shell.cpp -o bin/shell
 ```
 
-Our program has successfully compiled. Let's run the executable by entering the following:
+Our program has successfully compiled. That means we now have a directory ```bin``` which contains our ```shell``` executable. Let's run the executable by entering the following:
 
 ```
 	$ bin/shell
 	We are now in our program. 
 	Now we will exit the program.
 	exit
+	~/cs100HW4
 	$ 
 ```
 
@@ -97,20 +100,28 @@ The ```all``` target creates executables for all files listed under ```all:``` i
 	g++ -ansi -pedantic -Wall - Werror src/ls.cpp -o bin/ls
 ```
 
-By running ```make``` you utilize the ```all``` flag and have now created an executable ```shell``` and ```ls``` in the ```bin``` directory.
+By running ```make``` you utilize the ```all``` flag and have now created an executable ```shell``` and ```ls``` in the ```bin``` directory. In larger projects you may only want to create one specific executable. This is that the second and third targets ```shell``` and ```ls``` are for.
 
-In larger projects you may only want to create one specific executable. This is that the second and third targets ```shell``` and ```ls``` are for.
+Let's run run only our ls program:
 
-To only run the ```shell``` executable enter the following:
-```
-	$ make shell
-```
-You will get an output like this:
-```
-	if [ ! -d bin ]; then mkdir bin; fi
-	g++ -ansi -pedantic -Wall - Werror src/shell.cpp -o bin/shell
-```
-Note how only the ```shell``` executable was made and not ```ls```. The same can be done for ls by running
 ```
 	$ make ls
+	if [ ! -d bin ]; then mkdir bin; fi
+	g++ -ansi -pedantic -Wall - Werror src/ls.cpp -o bin/ls
 ```
+
+As you can see, we've made only one executable ```ls``` in the bin folder. Now to run the executable:
+```
+	$ bin/ls
+	.
+	..
+	.git
+	README.md
+	Makefile
+	src
+	bin
+	~/cs100HW4
+	$
+```
+
+TODO: mention ```clean``` and add it to ```Makefile```
