@@ -31,5 +31,10 @@ all:
   g++ $(CFLAGS) src/ls.cpp -o bin/ls
 ```
 The first line of the ```all``` target is a simple if-else statement. If there is not a directory called ```bin``` then make a directory called ```bin```. 
-The second line is compiling our program with ```g++``` using the flags we specified in line 1. It specifies the target is in the ```src``` directory and the file is ```ls.cpp```. ```-o bin/ls``` creates an executable ```ls``` in the ```bin``` directory.
+The second line is compiling our program with ```g++``` using the flags we specified in line 1. It specifies the target is in the ```src``` directory and the file is ```ls.cpp```. ```-o bin/ls``` creates an executable ```ls``` in the ```bin``` directory. Note the spaces in ```[ ! -d bin ]``` ```bash``` syntax requires there to be spaces for ```[]``` brackets in order to correctly identify variables. if the Makefile instead contained ```if [! -d bin ]; then mkdir bin; fi``` you would see something similar to this:
+```
+	$: make
+	$:if [! -d bin  ]; then mkdir bin; fi
+	/bin/sh: [!: command not found
+```
 
