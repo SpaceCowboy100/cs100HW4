@@ -34,7 +34,7 @@ all:
   if [ ! -d bin ]; then mkdir bin; fi
   g++ $(CFLAGS) src/shell.cpp -o bin/shell
 ```
-The first line of the ```all``` target is a simple if-else statement. If there is not a directory called ```bin``` then make a directory called ```bin```. 
+The first line of the ```all``` target is a simple if-else statement. If there is not a directory called ```bin```, then make a directory called ```bin```. 
 The second line is compiling our program with ```g++``` using the flags we specified in line 1. It specifies the target is in the ```src``` directory and the file is ```shell.cpp```. ```-o bin/shell``` creates an executable ```shell``` in the ```bin``` directory. 
 
 Note the spaces in ```[ ! -d bin ]``` ```bash``` syntax requires there to be spaces for ```[]``` brackets in order to correctly identify variables. If the Makefile instead contained ```if [! -d bin ]; then mkdir bin; fi``` you would see this:
@@ -102,7 +102,7 @@ The ```all``` target creates executables for all files listed under ```all:``` i
 
 By running ```make``` you utilize the ```all``` flag and have now created an executable ```shell``` and ```ls``` in the ```bin``` directory. In larger projects you may only want to create one specific executable. This is what the targets ```shell``` and ```ls``` are for.  
 
-Let's run only our ls program:
+Let's run only our ```ls``` program:
 
 ```
 	$ make ls
