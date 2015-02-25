@@ -1,7 +1,7 @@
 #quick reference to ```Makefile```
 ```Makefile```s are special files which are utilized with the ```make``` [command] (http://unixhelp.ed.ac.uk/CGI/man-cgi?make) to automatically build your projects.
 
-Why are ```Makefile```s so important? Instead of entering a command such as ```g++ main.cpp -o main``` and ```./main``` to run your program, you can just enter ```make``` to run your program. Most importantly in open source projects others can view your project and may want to work with it, however they may not know how to comple and run it. Creating ```Makefile```s will make it easier for others to compile and run your code.
+Why are ```Makefile```s so important? Instead of entering a command such as ```g++ main.cpp -o main``` and ```./main``` to run your program, you can just enter ```make``` to run your program. Most importantly in open source projects others can view your project and may want to work with it, however they may not know how to compile and run it. Creating ```Makefile```s will make it easier for others to compile and run your code.
 
 In projects, ```Makefile```s should be placed in the root directory, the files you wish to execute for the ```Makefile``` should be placed in a directory called ```src```. To create a ```Makefile``` enter the following command:
 ```	$: touch Makefile```
