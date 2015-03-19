@@ -29,13 +29,22 @@ Here are the contents of the `Makefile`:
 ```
 	FLAGS=-Wall -Werror
 ```
+<<<<<<< HEAD
 Here we are setting variable `FLAGS` to `-Wall -Werror`. 
 Although this may seem redundant for such a small project, in larger projects you can just change the value of `FLAGS` instead of changing every occurence of `-Wall -Werror`.  
+=======
+Here we are setting the variable `FLAGS` to `-Wall -Werror`. 
+Although this may seem redundant for such a small project, in larger projects you can just change the value of `FLAGS` instead of changing every occurance of `-Wall -Werror`.  
+>>>>>>> dddce1adfb0ce6df65a5808c4da44d4d7bc6c83a
 
 ```
 	all:
 ```
+<<<<<<< HEAD
 `all` is a the default 'target' for `Makefile`s. The `make` command will execute this target if no other is specified.
+=======
+`all` is the default 'target' for `Makefiles`. The `make` command will execute this target if no other is specified.
+>>>>>>> dddce1adfb0ce6df65a5808c4da44d4d7bc6c83a
 ```
 	if [ ! -d bin ]; then mkdir bin; fi
 	g++ $(FLAGS) src/hello.cpp -o bin/hello
@@ -79,8 +88,13 @@ If you had `foo.cpp` in your `src` directory and want to only compile and run th
 
 What's going on?
 We have two targets `all` and `foo`.
+<<<<<<< HEAD
 For both targets, we are using our if-else statement from earlier to make sure that we store our executables are stored in the `bin` directory.
 In this example `Makefile`, when you enter `$ make` `file1.cpp` and `foo.cpp` will compile and executables `file1` and `foo` will be created and placed in the `bin` directory.
+=======
+For both targets, we are using our if-else statement from earlier to make sure that our executables are stored in the `bin` directory.
+In this example `Makefile`, when you enter `$ make` `file1.cpp`, `file2.cpp`, and `foo.cpp` will compile and executables `file1`, `file2`, and `foo` will be created and placed in the `bin` directory.
+>>>>>>> dddce1adfb0ce6df65a5808c4da44d4d7bc6c83a
 If you instead entered `$ make foo` then only `foo.cpp` would compile and the executable `foo` will be created in the `bin` directory.
 
 Let's add a new target to our `Makefile`
