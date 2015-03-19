@@ -1,127 +1,86 @@
-#quick reference to ```Makefile```
-```Makefile```s are special files which are utilized with the ```make``` [command] (http://unixhelp.ed.ac.uk/CGI/man-cgi?make) to automatically build your projects.
+#quick reference for ```Makefile```s
+`Makefile`s are a powerful tool which makes it easier for others to compile and run your code.
+`Makefile`s are special files which are utilized with the `make` [command] (http://unixhelp.ed.ac.uk/CGI/man-cgi?make) to automatically build your projects.  
 
-Why are ```Makefile```s so important? Instead of entering a command such as ```g++ main.cpp -o main``` and ```./main``` to run your program, you can just enter ```make``` to run your program. Most importantly in open source projects others can view your project and may want to work with it, however they may not know how to compile and run it. Creating ```Makefile```s will make it easier for others to compile and run your code.
+In projects, `Makefile`s should be placed in the root directory, the files you wish to execute for the `Makefile` should be placed in a directory called `src`. 
+The executables you create from your `Makefile` should be stored in a directory called `bin`.
 
-In projects, ```Makefile```s should be placed in the root directory, the files you wish to execute for the ```Makefile``` should be placed in a directory called ```src```. To create a ```Makefile``` enter the following command:
-```	$: touch Makefile```
-To edit the ```Makefile``` enter:
-``` $: [text editor] Makefile```
-
-Let's say we have a program ```shell.cpp``` in our ```src``` directory, this program will take in user commands until ```exit``` is entered by the user. Let's try running our program using a ```Makefile``` instead of the *old* way. Here is the ```Makefile``` in its entirety:
-
-```
-CFLAGS=-ansi -pedantic -Wall -Werror
-
-all:
-  if [ ! -d bin ]; then mkdir bin; fi
-  g++ $(CFLAGS) src/shell.cpp -o bin/shell
-
-shell: 
-	if [ ! -d bin ]; then mkdir bin; fi
-	g++ $(CFLAGS) src/shell.cpp -o bin/shell
-```
-
-Now let's figure out what's going on.
-```
-CFLAGS=-ansi -pedantic -Wall -Werror
-```
-Here we are setting a variable ```CFLAGS``` to the flags we want to run our program with.
-We have two targets in this ```Makefile```. The first target is ```all``` and the second target is ```shell```. We will get into the specifics of targets later in this tutorial.
-
-```
-all:
-  if [ ! -d bin ]; then mkdir bin; fi
-  g++ $(CFLAGS) src/shell.cpp -o bin/shell
-```
-The first line of the ```all``` target is a simple if-else statement. If there is not a directory called ```bin```, then make a directory called ```bin```. 
-The second line is compiling our program with ```g++``` using the flags we specified in line 1. It specifies the target is in the ```src``` directory and the file is ```shell.cpp```. ```-o bin/shell``` creates an executable ```shell``` in the ```bin``` directory. 
-
-Note the spaces in ```[ ! -d bin ]``` ```bash``` syntax requires there to be spaces for ```[]``` brackets in order to correctly identify variables. If the Makefile instead contained ```if [! -d bin ]; then mkdir bin; fi``` you would see this:
-
-```
-	$: make
-	if [! -d bin  ]; then mkdir bin; fi
-	/bin/sh: [!: command not found
-```
-
-Now we have our ```Makefile``` lets run our shell program! From the root directory enter the ```make``` command.
-
-```	
-	$ make
-```
-
-At this point you should see the following:
-
+##syntax
+Before we compile and run our code with a `Makefile` we need to familiarize ourselves with some `bash` [syntax] (https://www.gnu.org/software/bash/manual/bash.html).
 ```
 	if [ ! -d bin ]; then mkdir bin; fi
-	g++ -ansi -pedantic -Wall - Werror src/shell.cpp -o bin/shell
 ```
+This is a simple if-else statement which we will include in our `Makefile`. 
+If there is not a directory called `bin`, then make a directory called `bin`. 
+Note the spaces in `[ ! -d bin ]` `bash` syntax requires there to be spaces for `[]` brackets in order to correctly identify variables. 
+If the Makefile instead contained `if [! -d bin ]; then mkdir bin; fi` there would be error thrown. 
 
-Our program has successfully compiled. That means we now have a directory ```bin``` which contains our ```shell``` executable. Let's run the executable by entering the following:
+Setting [variables] (http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-5.html) is also good practice for `Makefile`s
+```
+	FLAGS=-ansi -pedantic -Wall -Werror
+```
+Here we have a variable `FLAGS` and are setting `FLAGS` to the `g++` flags we want to compile our source code with.
+Note that there are no spaces after the `=`.
+
+##example
+We have source code `hello.cpp` in our `src` directory which outputs `Hello World!`.
+Here are the contents of the `Makefile`: 
+```
+	FLAGS=-Wall -Werror
+```
+Here we are setting variable `FLAGS` to `-Wall -Werror`. 
+Although this may seem redundant for such a small project, in larger projects you can just change the value of `FLAGS` instead of changing every occurance of `-Wall -Werror`.  
 
 ```
-	$ bin/shell
-	We are now in our program. 
-	Now we will exit the program.
-	exit
-	~/cs100HW4
-	$ 
+	all:
 ```
-
-#adding to your ```Makefile```
-We have our ```Makefile``` up and running! Now let's add a program ```ls.cpp``` which list all files in our current directory. How do we change our ```Makefile``` to allow our ```ls.cpp``` program to run? The fix is very simple. Our ```Makefile``` after adding ```ls.cpp``` now looks like this: 
-
+`all` is a the default 'target' for `Makefiles`. The `make` command will execute this target if no other is specified.
 ```
-CFLAGS=-ansi -pedantic -Wall -Werror
-
-all:
-  if [ ! -d bin ]; then mkdir bin; fi
-  g++ $(CFLAGS) src/shell.cpp -o bin/shell
-  g++ $(CFLAGS) src/ls.cpp -o bin/ls
-
-shell: 
 	if [ ! -d bin ]; then mkdir bin; fi
-	g++ $(CFLAGS) src/shell.cpp -o bin/shell
-
-ls: 
-	if [ ! -d bin ]; then mkdir bin; fi
-	g++ $(CFLAGS) src/ls.cpp -o bin/ls
+	g++ $(FLAGS) src/hello.cpp -o bin/hello
 ```
 
-Recall at the beginning of the tutorial when I said we had 2 targets. ```all``` and ```shell```. What we have done is added ```ls.cpp``` to our ```all``` target and created a third target ```ls```.
-
-The ```all``` target creates executables for all files listed under ```all:``` in the ```Makefile```. When you run ```make``` you will get the following output.
+Here we are using an if-else statement to make sure we have a directory `bin` which will store our executables.
+The next line compiles `hello.cpp` with the flags we specified and stores the executable `hello` in our `bin` directory.
+We now have our `Makefile` let's test it out!
+From the root directory enter `make`.
 
 ```
 	$ make
+```
+You should see the following:
+```
 	if [ ! -d bin ]; then mkdir bin; fi
-	g++ -ansi -pedantic -Wall - Werror src/shell.cpp -o bin/shell
-	g++ -ansi -pedantic -Wall - Werror src/ls.cpp -o bin/ls
-```
-
-By running ```make``` you utilize the ```all``` flag and have now created an executable ```shell``` and ```ls``` in the ```bin``` directory. In larger projects you may only want to create one specific executable. This is what the targets ```shell``` and ```ls``` are for.  
-
-Let's run only our ```ls``` program:
+	g++ -Wall -Werror src/hello.cpp -o bin/hello
 
 ```
-	$ make ls
-	if [ ! -d bin ]; then mkdir bin; fi
-	g++ -ansi -pedantic -Wall - Werror src/ls.cpp -o bin/ls
+Our source code compiled successfully. Now enter the following to run the executable:
+```
+	$ bin/hello
+	Hello World!	
+```
+We have our `Makefile` up and running! Now we can add to our project.
+
+
+##targets
+In smaller projects we may only have one target, `all` however in large projects you may not want to compile the entire contents of the `src` directory, only specified source code.  
+All source code under the `all` target will compile when you enter the `$ make` command from the terminal. 
+If you had `foo.cpp` in your `src` directory and want to only compile and run the `foo` executable your `Makefile` would look similar to this:
+
+```
+	all:
+		if [ ! -d bin ]; then mkdir bin; fi
+		g++ src/file1.cpp -o bin/file1
+		g++ src/file2.cpp -o bin/file2
+		g++ src/foo.cpp -o bin/foo
+
+	foo:
+		if [ ! -d bin ]; then mkdir bin; fi
+		g++ src/foo.cpp -o bin/foo
 ```
 
-As you can see, we've made only one executable ```ls``` in the bin folder. Now to run the executable:
-```
-	$ bin/ls
-	.
-	..
-	.git
-	README.md
-	Makefile
-	src
-	bin
-	~/cs100HW4
-	$
-```
-
-TODO: mention ```clean``` and add it to ```Makefile```
+What's going on?
+We have two targets `all` and `foo`.
+For both targets, we are using our if-else statement from earlier to make sure that we store our executables are stored in the `bin` directory.
+In this example `Makefile`, when you enter `$ make` `file1.cpp`, `file2.cpp`, and `foo.cpp` will compile and executables `file1`, `file2`, and `foo` will be created and placed in the `bin` directory.
+If you instead entered `$ make foo` then only `foo.cpp` would compile and the executable `foo` will be created in the `bin` directory.
