@@ -83,7 +83,7 @@ foo:
 
 What's going on?
 We have two targets the default target `all` and `foo`.
-For both targets, we are using our if-else statement from earlier to make sure that we store our executables are stored in the `bin` directory.
+For both targets, we are using our if-else statement from earlier to make sure that we store our executables in the `bin` directory.
 In this example `Makefile`, when you enter `$ make`, `file1.cpp` and `foo.cpp` will compile and executables `file1` and `foo` will be created and placed in the `bin` directory.
 If you instead entered `$ make foo` then only `foo.cpp` would compile and the executable `foo` will be created in the `bin` directory.
 
