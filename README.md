@@ -36,7 +36,7 @@ Although this may seem redundant for such a small project, in larger projects yo
 all:
 ```
 The first 'target' in our `Makefile` is `all`.
-Because `all` is the first target declared in the `Makefile`, it is a the default target for `Makefile`. 
+Because `all` is the first target declared in the `Makefile`, it is the default target for the `Makefile`. 
 The `make` command will execute this target if no other is specified.
 ```
 	if [ ! -d bin ]; then mkdir bin; fi
@@ -112,7 +112,7 @@ iterator:
 	if [ ! -d bin ]; then mkdir bin; fi
 	g++ $(STD) $(FLAGS) src/iterator.cpp -o bin/iterator
 ```
-This creates our second target in our `Makefile` `iterator`, unlike the `all` target this will only compile `iterator.cpp`.
+This creates our second target in our `Makefile`, `iterator` and unlike the `all` target this target will only compile `iterator.cpp`.
 Let's test our updated `Makefile`, compiling and running only the `iterator` target.
 
 ```
@@ -146,6 +146,6 @@ When the user enters the following:
 ```
 $ make clean
 ```
-The directory which we used to store our executables, `bin` is forcefully removed my the `make clean` command.
+The directory which we used to store our executables, `bin` is forcefully removed by the `make clean` command.
 
 With this knowledge you should now feel confident in starting your own projects and compiling your code with `Makefile`s.
