@@ -90,7 +90,7 @@ If you instead entered `$ make foo` then only `foo.cpp` would compile and the ex
 ##adding to our example
 Let's add a new target to our `Makefile`.
 In our `src` directory, we've added `iterator.cpp` which uses the `auto` feature of `c++11` to output the contents of a vector. 
-We're going to add a new target `iterator` to our `Makefile, the `iterator` target will compile `iterator.cpp` with the `c++11` standard and create an executable `iterator` and place it in our `bin` directory.
+We're going to add a new target `iterator` to our `Makefile`, the `iterator` target will compile `iterator.cpp` with the `c++11` standard and create an executable `iterator` and place it in our `bin` directory.
 Let's make the following additions to our `Makefile`.
 
 ```
