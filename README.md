@@ -8,7 +8,7 @@ The executables you create from your `Makefile` should be stored in a directory 
 ##syntax
 Before we compile and run our code with a `Makefile` we need to familiarize ourselves with some `bash` [syntax] (https://www.gnu.org/software/bash/manual/bash.html).
 ```
-	if [ ! -d bin ]; then mkdir bin; fi
+if [ ! -d bin ]; then mkdir bin; fi
 ```
 This is a simple if-else statement which we will include in our `Makefile`. 
 If there is not a directory called `bin`, then make a directory called `bin`. 
@@ -17,7 +17,7 @@ If the `Makefile` instead contained `if [! -d bin ]; then mkdir bin; fi` there w
 
 Setting [variables] (http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-5.html) is also good practice for `Makefile`s
 ```
-	FLAGS=-ansi -pedantic -Wall -Werror
+FLAGS=-ansi -pedantic -Wall -Werror
 ```
 Here we have a variable `FLAGS` and are setting `FLAGS` to the `g++` flags we want to compile our source code with.
 Note that there are no spaces after the `=`.
@@ -27,18 +27,18 @@ We have source code `hello.cpp` in our `src` directory which outputs `Hello Worl
 Let's compile and run our code.
 Here are the contents of the `Makefile`: 
 ```
-	FLAGS=-Wall -Werror
+FLAGS=-Wall -Werror
 ```
 Here we are setting variable `FLAGS` to `-Wall -Werror`. 
 Although this may seem redundant for such a small project, in larger projects you can just change the value of `FLAGS` instead of changing every occurence of `-Wall -Werror`.  
 
 ```
-	all:
+all:
 ```
 `all` is a the default 'target' for `Makefile`s. The `make` command will execute this target if no other is specified.
 ```
-	if [ ! -d bin ]; then mkdir bin; fi
-	g++ $(FLAGS) src/hello.cpp -o bin/hello
+if [ ! -d bin ]; then mkdir bin; fi
+g++ $(FLAGS) src/hello.cpp -o bin/hello
 ```
 
 Here we are using an if-else statement to make sure we have a directory `bin` which will store our executables.
@@ -47,17 +47,17 @@ We now have our `Makefile` let's test it out!
 From the root directory enter `make`.
 
 ```
-	$ make
+$ make
 ```
 You should see the following:
 ```
-	if [ ! -d bin ]; then mkdir bin; fi
-	g++ -Wall -Werror src/hello.cpp -o bin/hello
+if [ ! -d bin ]; then mkdir bin; fi
+g++ -Wall -Werror src/hello.cpp -o bin/hello
 ```
 Our source code compiled successfully. Now enter the following to run the executable:
 ```
-	$ bin/hello
-	Hello World!	
+$ bin/hello
+Hello World!	
 ```
 We have our `Makefile` up and running! Now we can add other targets to our project.
 
@@ -67,19 +67,18 @@ All source code under the `all` target will compile when you enter the `$ make` 
 If you had `foo.cpp` in your `src` directory and want to only compile and run the `foo` executable your `Makefile` would look similar to this:
 
 ```
-	all:
-		if [ ! -d bin ]; then mkdir bin; fi
-		g++ src/file1.cpp -o bin/file1
-		g++ src/foo.cpp -o bin/foo
+all:
+	if [ ! -d bin ]; then mkdir bin; fi
+	g++ src/file1.cpp -o bin/file1
+	g++ src/foo.cpp -o bin/foo
 
-	foo:
-		if [ ! -d bin ]; then mkdir bin; fi
-		g++ src/foo.cpp -o bin/foo
+foo:
+	if [ ! -d bin ]; then mkdir bin; fi
+	g++ src/foo.cpp -o bin/foo
 ```
 
 What's going on?
 We have two targets `all` and `foo`.
-<<<<<<< HEAD
 For both targets, we are using our if-else statement from earlier to make sure that we store our executables are stored in the `bin` directory.
 In this example `Makefile`, when you enter `$ make` `file1.cpp` and `foo.cpp` will compile and executables `file1` and `foo` will be created and placed in the `bin` directory.
 If you instead entered `$ make foo` then only `foo.cpp` would compile and the executable `foo` will be created in the `bin` directory.
@@ -90,41 +89,41 @@ We're going to add a new target `iterator` which compiles `iterator.cpp` with th
 Let's make the following additions to our `Makefile`.
 
 ```
-	FLAGS=-Wall -Werror
-	STD=-std=c++11
+FLAGS=-Wall -Werror
+STD=-std=c++11
 ```
 We have just added a new variable to our `Makefile` `STD` which will allow us to compile any source code we specify with the `c++11` standard.
 
 ```
-	all:
-		if [ ! -d bin ]; then mkdir bin; fi
-		g++ $(FLAGS) src/hello.cpp -o bin/hello
-		g++ $(STD) $(FLAGS) src/iterator.cpp -o bin/iterator
+all:
+	if [ ! -d bin ]; then mkdir bin; fi
+	g++ $(FLAGS) src/hello.cpp -o bin/hello
+	g++ $(STD) $(FLAGS) src/iterator.cpp -o bin/iterator
 ```
 We add `iterator.cpp` to the `all` target, compile it with the `c++11` standard and store executable `iterator` in the `bin` directory.
 
 ```
-	iterator:
-		if [ ! -d bin ]; then mkdir bin; fi
-		g++ $(STD) $(FLAGS) src/iterator.cpp -o bin/iterator
+iterator:
+	if [ ! -d bin ]; then mkdir bin; fi
+	g++ $(STD) $(FLAGS) src/iterator.cpp -o bin/iterator
 ```
 This creates our second target in our `Makefile` `iterator`, unlike the `all` target this will only compile `iterator.cpp`.
 Let's test our updated `Makefile`, compiling and running only the `iterator` target.
 
 ```
-	$ make iterator	
+$ make iterator	
 ```
 Entering `make iterator` specifies that we only want to compile the contents under the `iterator` target.
 At this point we should see the following:
 
 ```
-	if [ ! -d bin ]; then mkdir bin; fi
-	g++ -std=c++11 -Wall -Werror src/iterator.cpp -o bin/iterator
+if [ ! -d bin ]; then mkdir bin; fi
+g++ -std=c++11 -Wall -Werror src/iterator.cpp -o bin/iterator
 ```
 The source code has successfully compiled. Let's run the executable.
 ```
-	$ bin/iterator
-	Contents of vector: 10 20 30
+$ bin/iterator
+Contents of vector: 10 20 30
 ```
 We've successfully added our new target `iterator` and compiled our code!
 
@@ -135,12 +134,12 @@ The	`clean` target does not compile and run a specific file, rather used in `Mak
 The `clean` target in our case would look like this:
 
 ```
-	clean:
-		rm -rf bin
+clean:
+	rm -rf bin
 ```
 When the user enters the following:
 ```
-	$ make clean
+$ make clean
 ```
 The directory which we used to store our executables, `bin` is forcefully removed my the `make clean` command.
 
