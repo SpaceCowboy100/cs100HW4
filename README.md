@@ -61,10 +61,10 @@ Hello World!
 ```
 We have our `Makefile` up and running! Now we can add other targets to our project.
 
-##targets
+###targets
 In smaller projects we may only have one target, `all` however in large projects you may not want to compile the entire contents of the `src` directory, only specified source code.  
 All source code under the `all` target will compile when you enter the `$ make` command from the terminal. 
-If you had `foo.cpp` in your `src` directory and want to only compile and run the `foo` executable your `Makefile` would look similar to this:
+If you have `foo.cpp` in your `src` directory and want to only compile and run the `foo` executable your `Makefile` would look similar to this:
 
 ```
 all:
@@ -80,19 +80,20 @@ foo:
 What's going on?
 We have two targets `all` and `foo`.
 For both targets, we are using our if-else statement from earlier to make sure that we store our executables are stored in the `bin` directory.
-In this example `Makefile`, when you enter `$ make` `file1.cpp` and `foo.cpp` will compile and executables `file1` and `foo` will be created and placed in the `bin` directory.
+In this example `Makefile`, when you enter `$ make`, `file1.cpp` and `foo.cpp` will compile and executables `file1` and `foo` will be created and placed in the `bin` directory.
 If you instead entered `$ make foo` then only `foo.cpp` would compile and the executable `foo` will be created in the `bin` directory.
 
-Let's add a new target to our `Makefile`
+##adding to our example
+Let's add a new target to our `Makefile`.
 In our `src` directory, we've added `iterator.cpp` which uses the `auto` feature of `c++11` to output the contents of a vector. 
-We're going to add a new target `iterator` which compiles `iterator.cpp` with the `c++11` standard and creates an executable `iterator` and places it in our `bin` directory.
+We're going to add a new target to our `Makefile`, `iterator` which compiles `iterator.cpp` with the `c++11` standard and creates an executable `iterator` and places it in our `bin` directory.
 Let's make the following additions to our `Makefile`.
 
 ```
 FLAGS=-Wall -Werror
 STD=-std=c++11
 ```
-We have just added a new variable to our `Makefile` `STD` which will allow us to compile any source code we specify with the `c++11` standard.
+We have just added a new variable to our `Makefile`, `STD` which will allow us to compile any source code we specify with the `c++11` standard.
 
 ```
 all:
@@ -130,7 +131,7 @@ We've successfully added our new target `iterator` and compiled our code!
 ###clean
 We're should now feel confident in adding new targets to our `Makefile` to compile and run our code.
 There another special target called `clean` which should be included in `Makefile`s. 
-The	`clean` target does not compile and run a specific file, rather used in `Makefile`s to remove the executables created by the `make` command.
+The	`clean` target does not compile and run a specific file, rather it is used in `Makefile`s to remove the executables created by the `make` command.
 The `clean` target in our case would look like this:
 
 ```
