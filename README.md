@@ -144,4 +144,4 @@ $ make clean
 ```
 The directory which we used to store our executables, `bin` is forcefully removed my the `make clean` command.
 
-With this knowledge you should now feel confident in starting your own projects and compiling your code with `Makefiles`.
+With this knowledge you should now feel confident in starting your own projects and compiling your code with `Makefile`s.
