@@ -6,16 +6,16 @@ In projects, `Makefile`s should be placed in the root directory, the files you w
 The executables you create from your `Makefile` should be stored in a directory called `bin`.
 
 ##syntax
-Before we compile and run our code with a `Makefile` we need to familiarize ourselves with some `bash` [syntax] (https://www.gnu.org/software/bash/manual/bash.html).
+Before we compile and run our code with a `Makefile` we need to familiarize ourselves with some `bash` syntax. 
 ```
 if [ ! -d bin ]; then mkdir bin; fi
 ```
 This is a simple if-else statement which we will include in our `Makefile`. 
 If there is not a directory called `bin`, then make a directory called `bin`. 
-Note the spaces in `[ ! -d bin ]` `bash` syntax requires there to be spaces for `[]` brackets in order to correctly identify variables. 
+Note the spaces in `[ ! -d bin ]`, `bash` syntax requires there to be spaces for `[]` brackets in order to correctly identify variables. 
 If the `Makefile` instead contained `if [! -d bin ]; then mkdir bin; fi` there would be error thrown. 
 
-Setting [variables] (http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-5.html) is also good practice for `Makefile`s
+Setting [variables] (http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-5.html) is also good practice for `Makefile`s.
 ```
 FLAGS=-ansi -pedantic -Wall -Werror
 ```
@@ -35,16 +35,18 @@ Although this may seem redundant for such a small project, in larger projects yo
 ```
 all:
 ```
-`all` is a the default 'target' for `Makefile`s. The `make` command will execute this target if no other is specified.
+The first 'target' in our `Makefile` is `all`.
+Because `all` is the first target declared in the `Makefile`, it is a the default target for `Makefile`. 
+The `make` command will execute this target if no other is specified.
 ```
-if [ ! -d bin ]; then mkdir bin; fi
-g++ $(FLAGS) src/hello.cpp -o bin/hello
+	if [ ! -d bin ]; then mkdir bin; fi
+	g++ $(FLAGS) src/hello.cpp -o bin/hello
 ```
 
 Here we are using an if-else statement to make sure we have a directory `bin` which will store our executables.
 The next line compiles `hello.cpp` with the flags we specified and stores the executable `hello` in our `bin` directory.
 We now have our `Makefile` let's test it out!
-From the root directory enter `make`.
+From the root directory enter the `make` command:
 
 ```
 $ make
@@ -54,16 +56,18 @@ You should see the following:
 if [ ! -d bin ]; then mkdir bin; fi
 g++ -Wall -Werror src/hello.cpp -o bin/hello
 ```
-Our source code compiled successfully. Now enter the following to run the executable:
+Our source code compiled successfully. 
+Now enter the following to run the executable:
 ```
 $ bin/hello
 Hello World!	
 ```
-We have our `Makefile` up and running! Now we can add other targets to our project.
+We have our `Makefile` up and running! 
+Now we can add other targets to our project.
 
 ###targets
-In smaller projects we may only have one target, `all` however in large projects you may not want to compile the entire contents of the `src` directory, only specified source code.  
-All source code under the `all` target will compile when you enter the `$ make` command from the terminal. 
+In smaller projects we may only have one default target, however in large projects you may not want to compile the entire contents of the `src` directory, only specified source code.  
+All source code under the default target will compile when you enter the `$ make` command from the terminal. 
 If you have `foo.cpp` in your `src` directory and want to only compile and run the `foo` executable your `Makefile` would look similar to this:
 
 ```
@@ -78,7 +82,7 @@ foo:
 ```
 
 What's going on?
-We have two targets `all` and `foo`.
+We have two targets the default target `all` and `foo`.
 For both targets, we are using our if-else statement from earlier to make sure that we store our executables are stored in the `bin` directory.
 In this example `Makefile`, when you enter `$ make`, `file1.cpp` and `foo.cpp` will compile and executables `file1` and `foo` will be created and placed in the `bin` directory.
 If you instead entered `$ make foo` then only `foo.cpp` would compile and the executable `foo` will be created in the `bin` directory.
@@ -129,8 +133,8 @@ Contents of vector: 10 20 30
 We've successfully added our new target `iterator` and compiled our code!
 
 ###clean
-We're should now feel confident in adding new targets to our `Makefile` to compile and run our code.
-There another special target called `clean` which should be included in `Makefile`s. 
+We should now feel confident in adding new targets to our `Makefile` to compile and run our code.
+There is another special target called `clean` which should be included in `Makefile`s. 
 The	`clean` target does not compile and run a specific file, rather it is used in `Makefile`s to remove the executables created by the `make` command.
 The `clean` target in our case would look like this:
 
