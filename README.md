@@ -1,12 +1,74 @@
-#quick reference for ```Makefile```s
+#quick reference for `Makefile`s
 `Makefile`s are a powerful tool which makes it easier for others to compile and run your code.
-`Makefile`s are special files which are utilized with the `make` [command] (http://unixhelp.ed.ac.uk/CGI/man-cgi?make) to automatically build your projects.  
+`Makefile`s are special files which are used with the `make` [command] (http://unixhelp.ed.ac.uk/CGI/man-cgi?make) to automatically build your projects.  
 
-In projects, `Makefile`s should be placed in the root directory, the files you wish to execute for the `Makefile` should be placed in a directory called `src`. 
+##compiling without `Makefile`s
+We are already know how to compile our source code in the following manner:
+```
+$ g++ main.cpp -o main
+```
+The following command will compile `main.cpp` and create an executable `main` in the current working directory.
+To run the exectable we enter:
+```
+$ ./main
+```
+Let's see how we compile our source code with a `Makefile`.
+
+##example
+Let's say in our currrent working directory we have source code `hello.cpp` which will output `Hello World!` to the user.
+Let's look at a `Makefile` that will compile `hello.cpp` and create an executable `hello` in our current working directory.
+The `Makefile` would look like this:
+```
+all:
+	g++ hello.cpp -o hello
+```
+`all` is the default target. 
+Meaning the `make` command will execute this target if no other target is specified.
+The second line will compile `hello.cpp` and create an executable `hello` in our current working directory.
+We have our source code `hello.cpp` and our `Makefile`, let's test it out!
+From the current working directory enter:
+```
+$ make
+```
+Then you should see the following:
+```
+g++ hello.cpp -o hello
+```
+This means that our source code successfully compiled and there is now an executable `hello` in the current working directory.
+To run the executable enter the following:
+```
+$ ./hello
+Hello World!
+```
+Our source code successfully compiled and we ran the executable `hello`. 
+If we updated `hello.cpp` to output `Hello World! Great weather today!`, we make the necessary changes to the source code and enter `make`:
+```
+$ make
+g++ hello.cpp -o hello
+$ ./hello
+Hello World! Great weather today!
+```
+When we entered `make` after changing `hello.cpp` we recompiled `hello.cpp` and updated the executable `hello`.
+Whenever you update your source code, you can just enter the `make` command instead of the `(compiler) (source code) -o (executable name)` format of compiling source code.
+
+##directories
+In projects, `Makefile`s should be placed in the root directory, all source code should be placed in a directory called `src`. 
 The executables you create from your `Makefile` should be stored in a directory called `bin`.
+In our previous example we did not have our source code in a directory `src` and our executables in directory `bin`.
+If we were to use the `ls` command in our previous example, the current working directory would look similar to this:
+```
+$ ls
+$ hello   hello.cpp   Makefile   README.md
+```
+Instead, when you enter the `ls` command you should see something similar to this:
+```
+$ ls
+Makefile   README.md    src
+```
+Notice that we do not have a `bin` directory as mentioned earlier. We will create and modify our `bin` directly from our `Makefile`.
 
 ##syntax
-Before we compile and run our code with a `Makefile` we need to familiarize ourselves with some `bash` syntax. 
+Before we move onto our next example we need to familiarize ourselves with some `bash` syntax. 
 ```
 if [ ! -d bin ]; then mkdir bin; fi
 ```
@@ -15,32 +77,14 @@ If there is not a directory called `bin`, then make a directory called `bin`.
 Note the spaces in `[ ! -d bin ]`, `bash` syntax requires there to be spaces for `[]` brackets in order to correctly identify variables. 
 If the `Makefile` instead contained `if [! -d bin ]; then mkdir bin; fi` there would be error thrown. 
 
-Setting [variables] (http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-5.html) is also good practice for `Makefile`s.
-```
-FLAGS=-ansi -pedantic -Wall -Werror
-```
-Here we have a variable `FLAGS` and are setting `FLAGS` to the `g++` flags we want to compile our source code with.
-Note that there are no spaces after the `=`.
-
 ##example
-We have source code `hello.cpp` in our `src` directory which outputs `Hello World!`.
-Let's compile and run our code.
+In our `src` directory, we have `hello.cpp` which will output `Hello World!`.
 Here are the contents of the `Makefile`: 
-```
-FLAGS=-Wall -Werror
-```
-Here we are setting variable `FLAGS` to `-Wall -Werror`. 
-Although this may seem redundant for such a small project, in larger projects you can just change the value of `FLAGS` instead of changing every occurrence of `-Wall -Werror`.  
 
 ```
 all:
-```
-The first 'target' in our `Makefile` is `all`.
-Because `all` is the first target declared in the `Makefile`, it is the default target for the `Makefile`. 
-The `make` command will execute this target if no other is specified.
-```
 	if [ ! -d bin ]; then mkdir bin; fi
-	g++ $(FLAGS) src/hello.cpp -o bin/hello
+	g++ src/hello.cpp -o bin/hello
 ```
 
 Here we are using an if-else statement to make sure we have a directory `bin` which will store our executables.
@@ -54,7 +98,7 @@ $ make
 You should see the following:
 ```
 if [ ! -d bin ]; then mkdir bin; fi
-g++ -Wall -Werror src/hello.cpp -o bin/hello
+g++ src/hello.cpp -o bin/hello
 ```
 Our source code compiled successfully. 
 Now enter the following to run the executable:
