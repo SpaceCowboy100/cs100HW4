@@ -58,14 +58,15 @@ In our previous example we did not have our source code in a directory `src` and
 If we were to use the `ls` command in our previous example, the current working directory would look similar to this:
 ```
 $ ls
-$ hello   hello.cpp   Makefile   README.md
+hello   hello.cpp   Makefile   README.md
 ```
 Instead, when you enter the `ls` command you should see something similar to this:
 ```
 $ ls
 Makefile   README.md    src
 ```
-Notice that we do not have a `bin` directory as mentioned earlier. We will create and modify our `bin` directly from our `Makefile`.
+Note that we do not have the `bin` directory to store our executables.
+We will make our `bin` directory and manage it in our `Makefile`.
 
 ##syntax
 Before we move onto our next example we need to familiarize ourselves with some `bash` syntax. 
@@ -88,7 +89,7 @@ all:
 ```
 
 Here we are using an if-else statement to make sure we have a directory `bin` which will store our executables.
-The next line compiles `hello.cpp` with the flags we specified and stores the executable `hello` in our `bin` directory.
+The next line compiles `hello.cpp` and stores the executable `hello` in our `bin` directory.
 We now have our `Makefile` let's test it out!
 From the root directory enter the `make` command:
 
@@ -100,19 +101,32 @@ You should see the following:
 if [ ! -d bin ]; then mkdir bin; fi
 g++ src/hello.cpp -o bin/hello
 ```
-Our source code compiled successfully. 
+Our source code compiled successfully and the `bin` directory made if it did not already exist. 
 Now enter the following to run the executable:
 ```
 $ bin/hello
 Hello World!	
 ```
+You are free to call `make` multiple times after this. 
+Everytime you call `make` the executables in the `bin` directory will be updated.
+The if statement used in this `Makefile` is very important since it ensures we have our `bin` directory. 
+If we did not have a `bin` directory and we called `make` we would get the following error.
+```
+$ make
+g++ src/hello.cpp -o bin/hello
+/opt/rh/devtoolset-2/root/usr/libexec/gcc/x86_64-redhat-linux/4.8.2/ld: cannot open output file bin/hello: No such file or directory
+collect2: error: ld returned 1 exit status
+make: *** [all] Error 1
+```
+To avoid this error, make sure there is an if statement to ensure we have a `bin` directory.
+
 We have our `Makefile` up and running! 
 Now we can add other targets to our project.
 
 ###targets
-In smaller projects we may only have one default target, however in large projects you may not want to compile the entire contents of the `src` directory, only specified source code.  
+In smaller projects our `Makefile` may only use the default target, however in large projects you may not want to compile the entire contents of the `src` directory, only specified source code.  
 All source code under the default target will compile when you enter the `$ make` command from the terminal. 
-If you have `foo.cpp` in your `src` directory and want to only compile and run the `foo` executable your `Makefile` would look similar to this:
+If you have `foo.cpp` in your `src` directory and want to only compile and run the `foo` executable, your `Makefile` would look similar to this:
 
 ```
 all:
@@ -120,42 +134,42 @@ all:
 	g++ src/file1.cpp -o bin/file1
 	g++ src/foo.cpp -o bin/foo
 
+file1:
+	if [ ! -d bin ]; then mkdir bin; fi
+	g++ src/file1.cpp -o bin/file1
+
 foo:
 	if [ ! -d bin ]; then mkdir bin; fi
 	g++ src/foo.cpp -o bin/foo
 ```
 
-What's going on?
-We have two targets the default target `all` and `foo`.
-For both targets, we are using our if-else statement from earlier to make sure that we store our executables in the `bin` directory.
-In this example `Makefile`, when you enter `$ make`, `file1.cpp` and `foo.cpp` will compile and executables `file1` and `foo` will be created and placed in the `bin` directory.
-If you instead entered `$ make foo` then only `foo.cpp` would compile and the executable `foo` will be created in the `bin` directory.
-
 ##adding to our example
 Let's add a new target to our `Makefile`.
 In our `src` directory, we've added `iterator.cpp` which uses the `auto` feature of `c++11` to output the contents of a vector. 
-We're going to add a new target `iterator` to our `Makefile`, the `iterator` target will compile `iterator.cpp` with the `c++11` standard and create an executable `iterator` and place it in our `bin` directory.
+We also would like to compile `iterator.cpp` with the following flags: `-ansi -pedantic -Wall -Werror`.
+We're going to add a new target `iterator` to our `Makefile`, the `iterator` target will compile `iterator.cpp` with the `c++11` standard and the specified flags.
 Let's make the following additions to our `Makefile`.
 
 ```
 FLAGS=-Wall -Werror
 STD=-std=c++11
-```
-We have just added a new variable to our `Makefile`, `STD` which will allow us to compile any source code we specify with the `c++11` standard.
 
-```
 all:
 	if [ ! -d bin ]; then mkdir bin; fi
 	g++ $(FLAGS) src/hello.cpp -o bin/hello
 	g++ $(STD) $(FLAGS) src/iterator.cpp -o bin/iterator
-```
-We add `iterator.cpp` to the `all` target, compile it with the `c++11` standard and store executable `iterator` in the `bin` directory.
 
-```
+hello:
+	if [ ! -d bin ]; then mkdir bin; fi
+	g++ src/hello.cpp -o bin/hello
+
 iterator:
 	if [ ! -d bin ]; then mkdir bin; fi
 	g++ $(STD) $(FLAGS) src/iterator.cpp -o bin/iterator
+
 ```
+We have just added a new variable to our `Makefile`, `STD` which will allow us to compile any source code we specify with the `c++11` standard.
+We add `iterator.cpp` to the `all` target, compile it with the `c++11` standard and store executable `iterator` in the `bin` directory.
 This creates our second target in our `Makefile`, `iterator` and unlike the `all` target this target will only compile `iterator.cpp`.
 Let's test our updated `Makefile`, compiling and running only the `iterator` target.
 
@@ -167,7 +181,7 @@ At this point we should see the following:
 
 ```
 if [ ! -d bin ]; then mkdir bin; fi
-g++ -std=c++11 -Wall -Werror src/iterator.cpp -o bin/iterator
+g++ -std=c++11 -ansi -pedantic -Wall -Werror src/iterator.cpp -o bin/iterator
 ```
 The source code has successfully compiled. Let's run the executable.
 ```
