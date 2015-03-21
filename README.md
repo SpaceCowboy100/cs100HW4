@@ -8,7 +8,7 @@ We are already know how to compile our source code in the following manner:
 $ g++ main.cpp -o main
 ```
 The following command will compile `main.cpp` and create an executable `main` in the current working directory.
-To run the exectable we enter:
+To run the executable we enter:
 ```
 $ ./main
 ```
@@ -118,7 +118,7 @@ g++ src/hello.cpp -o bin/hello
 collect2: error: ld returned 1 exit status
 make: *** [all] Error 1
 ```
-This occured because we have this statement in our `Makefile` `g++ src/hello.cpp -o bin/hello`. 
+This occurred because we have this statement in our `Makefile` `g++ src/hello.cpp -o bin/hello`. 
 We want to store our executable hello in a directory `bin` which does not exist.
 To avoid this error, make sure in your targets there is an if-then statement checking for a `bin` directory and making the directory if necessary.
 However if there is already a `bin` directory, there would be no errors, and the executable would be created. 
