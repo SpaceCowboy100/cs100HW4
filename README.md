@@ -15,15 +15,14 @@ $ ./main
 Let's see how we compile our source code with a `Makefile`.
 
 ##example - Hello World!
-Let's say in our currrent working directory we have source code `hello.cpp` which will output `Hello World!` to the user.
+Let's say in our currrent working directory we have source code `hello.cpp` which will output `Hello World!`.
 Let's look at a `Makefile` that will compile `hello.cpp` and create an executable `hello` in our current working directory.
 The `Makefile` would look like this:
 ```
 all:
 	g++ hello.cpp -o hello
 ```
-`all` is the default target. 
-Meaning the `make` command will execute this target if no other target is specified.
+`all` is the default target, meaning the `make` command will execute this target if no other target is specified.
 The second line will compile `hello.cpp` and create an executable `hello` in our current working directory.
 We have our source code `hello.cpp` and our `Makefile`, let's test it out!
 From the current working directory enter:
@@ -48,7 +47,7 @@ g++ hello.cpp -o hello
 $ ./hello
 Hello World! Great weather today!
 ```
-When we entered `make` after changing `hello.cpp` we recompiled `hello.cpp` and updated the executable `hello`.
+We enter `make` after changing `hello.cpp` by doing so, we recompile `hello.cpp` and update the executable `hello`.
 Whenever you update your source code, you can just enter the `make` command instead of the `(compiler) (source code) -o (executable name)` format of compiling source code.
 
 ##directories
@@ -108,7 +107,8 @@ $ bin/hello
 Hello World!	
 ```
 You are free to call `make` multiple times after this. 
-Everytime you call `make` the executables in the `bin` directory will be updated.
+Everytime you call `make` the if statement checks if there is a directory called `bin`.
+Then the executable in the `bin` directory will be updated.
 The if statement used in this `Makefile` is very important since it ensures we have our `bin` directory. 
 If we did not have a `bin` directory and we called `make` we would get the following error.
 ```
@@ -118,7 +118,7 @@ g++ src/hello.cpp -o bin/hello
 collect2: error: ld returned 1 exit status
 make: *** [all] Error 1
 ```
-To avoid this error, make sure there is an if statement to ensure we have a `bin` directory.
+To avoid this error, make sure in your targets there is an if-then statement checking for a `bin` directory and making the directory if necessary.
 
 We have our `Makefile` up and running! 
 Now we can add other targets to our project.
@@ -180,7 +180,7 @@ The second variable is `STD`, which allows us to compile our source code with th
 Although setting variables may seem redundant for such a simple example, in larger projects you can change the values of your variables once instead of changing every single occurance throughout the `Makefile`.
 We add `iterator.cpp` to the `all` target, and compile it with the `c++11` standard and specified flags by using the variables we declared.
 We have now created two new targets, `hello` and `iterator`. 
-Let's test our updated `Makefile`, compiling and running only the `iterator` target.
+Let's test our updated `Makefile`, compiling only the `iterator` target.
 
 ```
 $ make iterator	
@@ -200,9 +200,9 @@ Contents of vector: 10 20 30
 We've successfully added our new target `iterator` and compiled our code!
 
 ###clean
-We should now feel confident in adding new targets to our `Makefile` to compile and run our code.
+We should now feel confident in adding new targets to our `Makefile` to compile our code.
 There is another special target called `clean` which should be included in `Makefile`s. 
-The	`clean` target does not compile and run a specific file, rather it is used in `Makefile`s to remove the executables created by the `make` command.
+The	`clean` target does not compile a specific file, rather it is used in `Makefile`s to remove the executables created by the `make` command.
 The `clean` target in our case would look like this:
 
 ```
