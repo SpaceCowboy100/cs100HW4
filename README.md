@@ -14,7 +14,7 @@ $ ./main
 ```
 Let's see how we compile our source code with a `Makefile`.
 
-##example
+##example - Hello World!
 Let's say in our currrent working directory we have source code `hello.cpp` which will output `Hello World!` to the user.
 Let's look at a `Makefile` that will compile `hello.cpp` and create an executable `hello` in our current working directory.
 The `Makefile` would look like this:
@@ -78,7 +78,7 @@ If there is not a directory called `bin`, then make a directory called `bin`.
 Note the spaces in `[ ! -d bin ]`, `bash` syntax requires there to be spaces for `[]` brackets in order to correctly identify variables. 
 If the `Makefile` instead contained `if [! -d bin ]; then mkdir bin; fi` there would be error thrown. 
 
-##example
+##example - directories
 In our `src` directory, we have `hello.cpp` which will output `Hello World!`.
 Here are the contents of the `Makefile`: 
 
@@ -143,7 +143,7 @@ foo:
 	g++ src/foo.cpp -o bin/foo
 ```
 
-##adding to our example
+##example - targets and variables
 Let's add a new target to our `Makefile`.
 In our `src` directory, we've added `iterator.cpp` which uses the `auto` feature of `c++11` to output the contents of a vector. 
 We also would like to compile `iterator.cpp` with the following flags: `-Wall -Werror`.
