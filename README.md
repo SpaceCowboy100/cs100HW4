@@ -176,7 +176,6 @@ hello:
 iterator:
 	if [ ! -d bin ]; then mkdir bin; fi
 	g++ $(STD) $(FLAGS) src/iterator.cpp -o bin/iterator
-
 ```
 We have just added two variables in our `Makefile`.
 The first variable is `FLAGS`, which is set to the flags we want to compile specified source code with, `-Wall -Werror`.
