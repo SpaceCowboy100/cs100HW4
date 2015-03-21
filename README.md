@@ -110,7 +110,7 @@ You are free to call `make` multiple times after this.
 Every time you call `make` the if statement checks if there is a directory called `bin`.
 Then the executable in the `bin` directory will be updated.
 The if statement used in this `Makefile` is very important since it ensures we have our `bin` directory. 
-If we did not have a `bin` directory and we called `make` we would get the following error.
+If we comment out the if statement in the `Makefile` and if we do not have a `bin` directory, calling `$ make` would throw the following error:
 ```
 $ make
 g++ src/hello.cpp -o bin/hello
@@ -118,7 +118,11 @@ g++ src/hello.cpp -o bin/hello
 collect2: error: ld returned 1 exit status
 make: *** [all] Error 1
 ```
+This occured because we have this statement in our `Makefile` `g++ src/hello.cpp -o bin/hello`. 
+We want to store our executable hello in a directory `bin` which does not exist.
 To avoid this error, make sure in your targets there is an if-then statement checking for a `bin` directory and making the directory if necessary.
+However if there is already a `bin` directory, there would be no errors, and the executable would be created. 
+It is never safe to assume that everyone knows that the `bin` directory should be included, which is why we place the if-then statement in all targets.
 
 We have our `Makefile` up and running! 
 Now we can add other targets to our project.
