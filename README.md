@@ -146,7 +146,13 @@ foo:
 ##adding to our example
 Let's add a new target to our `Makefile`.
 In our `src` directory, we've added `iterator.cpp` which uses the `auto` feature of `c++11` to output the contents of a vector. 
-We also would like to compile `iterator.cpp` with the following flags: `-ansi -pedantic -Wall -Werror`.
+We also would like to compile `iterator.cpp` with the following flags: `-Wall -Werror`.
+For this we will use variables.
+Variable syntax is as follows:
+```
+variable name = expression
+```
+To use a variable, we surround it with `$(` and `)`.
 We're going to add a new target `iterator` to our `Makefile`, the `iterator` target will compile `iterator.cpp` with the `c++11` standard and the specified flags.
 Let's make the following additions to our `Makefile`.
 
@@ -156,7 +162,7 @@ STD=-std=c++11
 
 all:
 	if [ ! -d bin ]; then mkdir bin; fi
-	g++ $(FLAGS) src/hello.cpp -o bin/hello
+	g++ src/hello.cpp -o bin/hello
 	g++ $(STD) $(FLAGS) src/iterator.cpp -o bin/iterator
 
 hello:
@@ -168,9 +174,12 @@ iterator:
 	g++ $(STD) $(FLAGS) src/iterator.cpp -o bin/iterator
 
 ```
-We have just added a new variable to our `Makefile`, `STD` which will allow us to compile any source code we specify with the `c++11` standard.
-We add `iterator.cpp` to the `all` target, compile it with the `c++11` standard and store executable `iterator` in the `bin` directory.
-This creates our second target in our `Makefile`, `iterator` and unlike the `all` target this target will only compile `iterator.cpp`.
+We have just added two variables in our `Makefile`.
+The first variable is `FLAGS`, which is set to the flags we want to compile specified source code with, `-Wall -Werror`.
+The second variable is `STD`, which allows us to compile our source code with the `c++11` standard.
+Although setting variables may seem redundant for such a simple example, in larger projects you can change the values of your variables once instead of changing every single occurance throughout the `Makefile`.
+We add `iterator.cpp` to the `all` target, and compile it with the `c++11` standard and specified flags by using the variables we declared.
+We have now created two new targets, `hello` and `iterator`. 
 Let's test our updated `Makefile`, compiling and running only the `iterator` target.
 
 ```
@@ -181,7 +190,7 @@ At this point we should see the following:
 
 ```
 if [ ! -d bin ]; then mkdir bin; fi
-g++ -std=c++11 -ansi -pedantic -Wall -Werror src/iterator.cpp -o bin/iterator
+g++ -std=c++11 -Wall -Werror src/iterator.cpp -o bin/iterator
 ```
 The source code has successfully compiled. Let's run the executable.
 ```
