@@ -15,7 +15,7 @@ $ ./main
 Let's see how we compile our source code with a `Makefile`.
 
 ##example - Hello World!
-Let's say in our currrent working directory we have source code `hello.cpp` which will output `Hello World!`.
+Let's say in our current working directory we have source code `hello.cpp` which will output `Hello World!`.
 Let's look at a `Makefile` that will compile `hello.cpp` and create an executable `hello` in our current working directory.
 The `Makefile` would look like this:
 ```
@@ -100,14 +100,14 @@ You should see the following:
 if [ ! -d bin ]; then mkdir bin; fi
 g++ src/hello.cpp -o bin/hello
 ```
-Our source code compiled successfully and the `bin` directory made if it did not already exist. 
+Our source code compiled successfully and the `bin` directory was made if it did not already exist. 
 Now enter the following to run the executable:
 ```
 $ bin/hello
 Hello World!	
 ```
 You are free to call `make` multiple times after this. 
-Everytime you call `make` the if statement checks if there is a directory called `bin`.
+Every time you call `make` the if statement checks if there is a directory called `bin`.
 Then the executable in the `bin` directory will be updated.
 The if statement used in this `Makefile` is very important since it ensures we have our `bin` directory. 
 If we did not have a `bin` directory and we called `make` we would get the following error.
@@ -177,7 +177,7 @@ iterator:
 We have just added two variables in our `Makefile`.
 The first variable is `FLAGS`, which is set to the flags we want to compile specified source code with, `-Wall -Werror`.
 The second variable is `STD`, which allows us to compile our source code with the `c++11` standard.
-Although setting variables may seem redundant for such a simple example, in larger projects you can change the values of your variables once instead of changing every single occurance throughout the `Makefile`.
+Although setting variables may seem redundant for such a simple example, in larger projects you can change the values of your variables once instead of changing every single occurrence throughout the `Makefile`.
 We add `iterator.cpp` to the `all` target, and compile it with the `c++11` standard and specified flags by using the variables we declared.
 We have now created two new targets, `hello` and `iterator`. 
 Let's test our updated `Makefile`, compiling only the `iterator` target.
